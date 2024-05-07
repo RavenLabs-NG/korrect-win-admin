@@ -41,7 +41,7 @@ const Games = ({ leagues }: Props) => {
 
     const { data, isLoading, isPreviousData, isFetching } = useQuery<TGameSetGroup>({
         queryKey: ['games', page],
-        queryFn: () => getGameSets({ page, pageSize: 1 }),
+        queryFn: () => getGameSets({ page, pageSize: 20 }),
         keepPreviousData: true,
         staleTime: 5000,
     })
@@ -51,7 +51,7 @@ const Games = ({ leagues }: Props) => {
         if (!isPreviousData && (Number(data?.currentPage) < Number(data?.totalPages))) {
             queryClient.prefetchQuery({
                 queryKey: ['games', page + 1],
-                queryFn: () => getGameSets({ page: page + 1, pageSize: 1 }),
+                queryFn: () => getGameSets({ page: page + 1, pageSize: 20 }),
             })
         }
     }, [data, isPreviousData, page, queryClient])

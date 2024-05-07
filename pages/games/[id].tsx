@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
+import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useQuery, useQueryClient } from 'react-query';
 import { DataGrid, GridSortModel } from "@mui/x-data-grid";
@@ -8,7 +9,7 @@ import ReactPaginate from 'react-paginate';
 import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
 
 import customStyle from '../../src/utils/customStyle'
-import { Loader, Spinner, Modal } from '@/src/components/UI';
+import { Loader, Spinner  } from '@/src/components/UI';
 import Layout from '@/src/components/Layout'
 
 import { getPredictions, getAGameSet } from '@/src/queries/admin.queries';
@@ -102,7 +103,7 @@ const Game = () => {
                 return (
                     <div className="flex flex-col justify-center h-full gap-2">
                         {
-                            params.row.games.map((game: TPredictionSolo) => {
+                            params?.row?.predictions.map((game: TPredictionSolo) => {
                                 return (
                                     <div key={game.id} className="">
                                         <p className='text-xs text-center'>{game.home} : {game.away}</p>
@@ -139,7 +140,7 @@ const Game = () => {
             renderCell(params) {
                 return (
                     <div className="flex justify-center items-center gap-2 h-full w-full">
-                        <button title='View User' onClick={() => handleViewUser(params.row)} className={`bg-transparent border-0 text-blue outline-none px-2 py-1`}>
+                        <button title='View User' onClick={() => handleViewUser(params.row)} className={`bg-transparent border-0 text-green-korrect outline-none px-2 py-1`}>
                             <Person2OutlinedIcon />
                         </button>
                         {/* <button onClick={() => handleClick(params.row)} className={`bg-transparent border-0 text-green outline-none px-2 py-1`}>
@@ -231,7 +232,7 @@ const Game = () => {
 
 
     const handleViewUser = (row: any) => {
-        return push(`/users/${row.userId}`)
+        return push(`/users?userId=${row.userId}`)
     }
 
     const handlePageClick = ({ selected }: { selected: number }) => {
@@ -333,5 +334,25 @@ const Game = () => {
         </Layout>
     )
 }
+
+export const getServerSideProps: GetServerSideProps = async ({
+    req: { cookies }
+}) => {
+    if (!cookies.korrecto) {
+        return {
+            redirect: {
+                destination: "/login",
+                permanent: false
+            }
+        };
+    }
+
+    return {
+        props: {
+
+        }
+    };
+};
+
 
 export default Game

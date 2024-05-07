@@ -78,7 +78,7 @@ const Login = () => {
                 </section>
                 <div className="card !px-8 !py-16 sm:px-16 sm:py-20">
                     <form className="w-full" onSubmit={handleSubmit}>
-                        <h1 className="text-2xl text-center text-black-dark font-bold mb-4">
+                        <h1 className="text-2xl text-center text-black-dark font-semibold mb-4">
                             Login
                         </h1>
                         <div className="w-full mb-6">

@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react'
+import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
 import { DataGrid, GridSortModel } from "@mui/x-data-grid";
 import { GridColDef } from "@mui/x-data-grid/models";
 import { format } from "date-fns";
 import ReactPaginate from 'react-paginate';
 import { useQuery, useQueryClient } from 'react-query';
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import { Input, Loader, Spinner } from '@/src/components/UI'
 import Layout from '@/src/components/Layout'
@@ -18,6 +22,7 @@ const Dashboard = () => {
 
     const { data: { token } } = useData();
     const queryClient = useQueryClient()
+    const { push } = useRouter();
 
     const styles = customStyle();
 
@@ -45,64 +50,8 @@ const Dashboard = () => {
         }
     }, [data, isPreviousData, page, queryClient, token])
 
-    const testData = [
-        {
-            id: 1,
-            name: 'John Snow',
-            date: '2024-04-12',
-            phone: '2349123456789',
-            predictions: 15,
-            createdAt: Date.now(),
-            status: 'active'
-        },
-        {
-            id: 2,
-            name: 'Jack Sparrow',
-            date: '2024-04-12',
-            phone: '2349123456789',
-            predictions: 17,
-            createdAt: Date.now(),
-            status: 'active'
-        },
-        {
-            id: 3,
-            name: 'John Wick',
-            date: '2024-04-12',
-            phone: '2349123456789',
-            predictions: 19,
-            createdAt: Date.now(),
-            status: 'inactive'
-        },
-        {
-            id: 4,
-            name: 'Frida Khalo',
-            date: '2024-04-12',
-            phone: '2349123456789',
-            predictions: 13,
-            createdAt: Date.now(),
-            status: 'active'
-        },
-        {
-            id: 5,
-            name: 'Hushpupi',
-            date: '2024-04-12',
-            phone: '2349123456789',
-            predictions: 11,
-            createdAt: Date.now(),
-            status: 'active'
-        },
-    ]
 
     const columns: GridColDef[] = [
-        // {
-        //     field: "id",
-        //     headerName: "#",
-        //     width: 70,
-        //     headerAlign: "center",
-        //     align: "center",
-        //     flex: 0.5,
-        //     sortComparator: (a, b) => parseInt(a) - parseInt(b)
-        // },
         {
             field: "username",
             headerName: "Username",
@@ -160,7 +109,26 @@ const Dashboard = () => {
             },
             flex: 1
         },
+        {
+            field: "userId",
+            headerName: "View User",
+            headerAlign: "center",
+            renderCell(params) {
+                return (
+                    <div className="flex justify-center items-center gap-2 h-full w-full">
+                        <button title='View User' onClick={() => handleViewUser(params.row)} className={`bg-transparent border-0 text-green-korrect outline-none px-2 py-1`}>
+                            <VisibilityIcon />
+                        </button>
+                    </div>
+                );
+            },
+            flex: 0.5
+        },
     ];
+
+    const handleViewUser = (row: any) => {
+        return push(`/users?userId=${row.id}`)
+    }
 
     const handlePageClick = ({ selected }: { selected: number }) => {
         setPage(selected + 1);
@@ -273,5 +241,24 @@ const Dashboard = () => {
         </Layout>
     )
 }
+
+export const getServerSideProps: GetServerSideProps = async ({
+    req: { cookies }
+}) => {
+    if (!cookies.korrecto) {
+        return {
+            redirect: {
+                destination: "/login",
+                permanent: false
+            }
+        };
+    }
+
+    return {
+        props: {
+
+        }
+    };
+};
 
 export default Dashboard

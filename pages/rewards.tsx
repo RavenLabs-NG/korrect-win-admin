@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { GetServerSideProps } from 'next';
 import { useQuery, useQueryClient, useMutation } from 'react-query';
 import { DataGrid, GridSortModel } from "@mui/x-data-grid";
 import { GridColDef } from "@mui/x-data-grid/models";
@@ -252,5 +253,26 @@ const Rewards = () => {
         </Layout>
     )
 }
+
+
+export const getServerSideProps: GetServerSideProps = async ({
+    req: { cookies }
+}) => {
+    if (!cookies.korrecto) {
+        return {
+            redirect: {
+                destination: "/login",
+                permanent: false
+            }
+        };
+    }
+
+    return {
+        props: {
+
+        }
+    };
+};
+
 
 export default Rewards

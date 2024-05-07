@@ -7,7 +7,7 @@ type TLogin = {
 
 export const logInUser = async (payload: TLogin) => {
 	const { data } = await queryClient()
-		.post("/web/admin/login", payload)
+		.post("/v1/web/admin/login", payload)
 		.catch(e => nextError(e));
 	return data;
 };
@@ -38,17 +38,11 @@ export const getAllSubscribers = async ({ token, page }: QSubscribers) => {
 	return data.data;
 };
 
-export const getSubscriberById = async ({
-	token,
-	id
-}: {
-	token: string;
-	id: string;
-}) => {
-	const { data } = await queryClient(token)
-		.get(`/admin/subscribers/${id}`)
+export const getSubscriberById = async (id: string) => {
+	const { data } = await queryClient()
+		.get(`/v1/admin/subscribers/${id}`)
 		.catch(e => nextError(e));
-	return data;
+	return data.data;
 };
 
 type TCreateGameSet = {
@@ -129,7 +123,12 @@ export const getPredictions = async (payload: TPredict) => {
 	return data.data;
 };
 
-// admin/winners?status=PENDING
+export const getUserPredictions = async (id: string) => {
+	const { data } = await queryClient()
+		.get(`/v1/admin/subscribers/${id}/predictions`)
+		.catch(e => nextError(e));
+	return data.data;
+};
 
 type TWinners = {
 	page?: number;
