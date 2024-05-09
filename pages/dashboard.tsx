@@ -38,17 +38,18 @@ const Dashboard = () => {
         queryFn: () => getAllSubscribers({ token, page }),
         keepPreviousData: true,
         staleTime: 5000,
+        // enabled: false
     });
 
     // Prefetch the next page!
-    useEffect(() => {
-        if (!isPreviousData && (Number(data?.currentPage) < Number(data?.pages))) {
-            queryClient.prefetchQuery({
-                queryKey: ['subscribers', page + 1],
-                queryFn: () => getAllSubscribers({ token, page: page + 1 }),
-            })
-        }
-    }, [data, isPreviousData, page, queryClient, token])
+    // useEffect(() => {
+    //     if (!isPreviousData && (Number(data?.currentPage) < Number(data?.pages))) {
+    //         queryClient.prefetchQuery({
+    //             queryKey: ['subscribers', page + 1],
+    //             queryFn: () => getAllSubscribers({ token, page: page + 1 }),
+    //         })
+    //     }
+    // }, [data, isPreviousData, page, queryClient, token])
 
 
     const columns: GridColDef[] = [

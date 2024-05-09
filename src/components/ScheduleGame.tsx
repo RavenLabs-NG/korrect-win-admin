@@ -5,9 +5,10 @@ import { Moment } from 'moment';
 import { toast } from 'react-toastify';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import { add } from 'date-fns';
 
 import { Input, Dropdown, Spinner } from './UI';
-import { League, TFixturesInterface, TFixture } from '../types';
+import { League, TFixture } from '../types';
 import { getFixtures, createGameSets } from '../queries/admin.queries';
 
 type TFixtureAlt = {
@@ -62,7 +63,7 @@ const ScheduleGame = ({ leagues, setControl }: Props) => {
 
     const onDateChange = (e: Moment | string) => {
         //@ts-ignore
-        setStartDate(new Date(e.format()).toISOString().substring(0, 10))
+        setStartDate(add(new Date(e.format()), { days: 1 }).toISOString().substring(0, 10))
     }
 
     const handleFetchFixtures = (e: any) => {

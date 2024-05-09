@@ -1,13 +1,13 @@
 import axios, { AxiosError } from "axios";
 
 export const queryClient = (token?: string) =>
-  axios.create({
-    baseURL: "http://203.161.38.57:1322/",
-    headers: {
-      "Content-Type": "application/json",
-      ...(token && { Authorization: `Bearer ${token}` }),
-    },
-  });
+	axios.create({
+		baseURL: process.env.NEXT_PUBLIC_BASE_URL as string,
+		headers: {
+			"Content-Type": "application/json",
+			...(token && { Authorization: `Bearer ${token}` })
+		}
+	});
 
 export const altQueryClient = (token?: string) =>
 	axios.create({
