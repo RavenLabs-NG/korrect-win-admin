@@ -55,14 +55,14 @@ const Game = () => {
     })
 
     // Prefetch the next page!
-    useEffect(() => {
-        if (!isPreviousData && (Number(data?.currentPage) < Number(data?.pages))) {
-            queryClient.prefetchQuery({
-                queryKey: ['predictions', query.id, page + 1],
-                queryFn: () => getPredictions(payload),
-            })
-        }
-    }, [data, isPreviousData, page, queryClient, payload, query.id])
+    // useEffect(() => {
+    //     if (!isPreviousData && (Number(data?.currentPage) < Number(data?.pages))) {
+    //         queryClient.prefetchQuery({
+    //             queryKey: ['predictions', query.id, page + 1],
+    //             queryFn: () => getPredictions(payload),
+    //         })
+    //     }
+    // }, [data, isPreviousData, page, queryClient, payload, query.id])
 
     const columns: GridColDef[] = [
         // {

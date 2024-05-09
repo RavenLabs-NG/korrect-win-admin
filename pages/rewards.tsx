@@ -40,14 +40,14 @@ const Rewards = () => {
     });
 
     // Prefetch the next page!
-    useEffect(() => {
-        if (!isPreviousData && (Number(data?.currentPage) < Number(data?.pages))) {
-            queryClient.prefetchQuery({
-                queryKey: ['winners', page + 1],
-                queryFn: () => getWinners({ page: page + 1, status }),
-            })
-        }
-    }, [data, isPreviousData, page, queryClient, status]);
+    // useEffect(() => {
+    //     if (!isPreviousData && (Number(data?.currentPage) < Number(data?.pages))) {
+    //         queryClient.prefetchQuery({
+    //             queryKey: ['winners', page + 1],
+    //             queryFn: () => getWinners({ page: page + 1, status }),
+    //         })
+    //     }
+    // }, [data, isPreviousData, page, queryClient, status]);
 
     const columns: GridColDef[] = [
         // {
