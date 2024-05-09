@@ -47,14 +47,14 @@ const Games = ({ leagues }: Props) => {
     })
 
     // Prefetch the next page!
-    useEffect(() => {
-        if (!isPreviousData && (Number(data?.currentPage) < Number(data?.totalPages))) {
-            queryClient.prefetchQuery({
-                queryKey: ['games', page + 1],
-                queryFn: () => getGameSets({ page: page + 1, pageSize: 20 }),
-            })
-        }
-    }, [data, isPreviousData, page, queryClient])
+    // useEffect(() => {
+    //     if (!isPreviousData && (Number(data?.currentPage) < Number(data?.totalPages))) {
+    //         queryClient.prefetchQuery({
+    //             queryKey: ['games', page + 1],
+    //             queryFn: () => getGameSets({ page: page + 1, pageSize: 20 }),
+    //         })
+    //     }
+    // }, [data, isPreviousData, page, queryClient])
 
     const handleClick = (row: any) => {
         push(`/games/${row.id}`)

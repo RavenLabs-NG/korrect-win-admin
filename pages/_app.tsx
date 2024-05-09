@@ -32,7 +32,15 @@ const inter = Inter({
 // const workSans = Work_Sans({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'] })
 
 export default function App({ Component, pageProps }: AppProps) {
-    const queryclient = new QueryClient();
+    const queryclient = new QueryClient({
+        defaultOptions: {
+            queries: {
+                refetchOnWindowFocus: false,
+                cacheTime: 1000 * 60 * 15,
+                staleTime: 1000 * 60 * 30
+            },
+        },
+    });
 
     const MyComponent = Component as any;
 
