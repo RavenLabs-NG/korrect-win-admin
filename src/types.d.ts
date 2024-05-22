@@ -101,6 +101,8 @@ export type TGameSetSingle = {
 	round: string;
 	gameDate: string;
 	time: string;
+    status: string;
+    statusText: string;
 	home: {
 		id: string;
 		providerId: string;

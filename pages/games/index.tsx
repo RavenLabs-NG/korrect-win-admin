@@ -98,7 +98,7 @@ const Games = ({ leagues }: Props) => {
                             params.row.games.map((game: TGameSetSingle) => {
                                 return (
                                     <div key={game.id} className="">
-                                        <p className='text-xs text-center'>{game.home.name} : {game.away.name}</p>
+                                        <p className='text-xs text-center'>{game.home.name} <span className='text-green-korrect font-semibold'>{game.home.score}:{game.away.score}</span> {game.away.name}</p>
                                     </div>
                                 )
                             })
@@ -106,6 +106,29 @@ const Games = ({ leagues }: Props) => {
                     </div>
                 )
                 
+            },
+            flex: 1
+        },
+        {
+            field: "addedBy",
+            headerName: "Status",
+            width: 180,
+            headerAlign: "center",
+            renderCell(params) {
+                return (
+                    <div className="flex flex-col justify-center h-full gap-2">
+                        {
+                            params.row.games.map((game: TGameSetSingle) => {
+                                return (
+                                    <div key={game.id} className="">
+                                        <p className={`text-xs text-center ${game.status === 'FT' ? 'text-green' : game.status === 'NS' ? 'text-goldenrod' : 'text-red'}`}>{game.statusText} </p>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                )
+
             },
             flex: 1
         },

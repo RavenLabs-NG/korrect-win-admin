@@ -199,9 +199,23 @@ const Game = () => {
             },
         },
         {
+            field: "results",
+            headerName: "Scores",
+            width: 130,
+            flex: 1,
+            headerAlign: "center",
+            renderCell(params) {
+                return (
+                    <div className='flex justify-center items-center h-full gap-4'>
+                        <span className='text-green-korrect font-semibold text-sm'>{params.row.home.score}:{params.row.away.score}</span>
+                    </div>
+                )
+            },
+        },
+        {
             field: "away",
             headerName: "Away Team",
-            width: 130,
+            width: 70,
             flex: 1,
             headerAlign: "center",
             renderCell(params) {
@@ -212,6 +226,20 @@ const Game = () => {
                     </div>
                 )
             },
+        },
+        {
+            field: "statusText",
+            headerName: "Status",
+            type: "string",
+            width: 100,
+            renderCell(params) {
+                return (
+                    <div className='flex-center h-full'>
+                        <p className={`text-xs text-center ${params.row.status === 'FT' ? 'text-green' : params.row.status === 'NS' ? 'text-goldenrod' : 'text-red'}`}>{params.row.statusText} </p>
+                    </div>
+                )
+            },
+            flex: 1
         },
         {
             field: "date",

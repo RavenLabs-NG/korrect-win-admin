@@ -5,7 +5,7 @@ import { Moment } from 'moment';
 import { toast } from 'react-toastify';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
-import { add } from 'date-fns';
+import { add, sub } from 'date-fns';
 
 import { Input, Dropdown, Spinner } from './UI';
 import { League, TFixture } from '../types';
@@ -56,9 +56,7 @@ const ScheduleGame = ({ leagues, setControl }: Props) => {
     }, [leagues]);
 
     const validBookingDate = (current: { isAfter: (n: Date) => void, isBefore: (n: Date) => void }) => {
-        // current.isAfter(sub(new Date(), { days: 1 }));
-        //@ts-ignore
-        return current.isAfter(new Date());
+        return current.isAfter(sub(new Date(), { days: 1 }));
     }
 
     const onDateChange = (e: Moment | string) => {
