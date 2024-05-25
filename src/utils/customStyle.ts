@@ -5,6 +5,7 @@ const useStyles = makeStyles(theme =>
 		root: {
 			border: "none",
 			minWidth: "45rem",
+            overflow: "scroll",
 			fontFamily: "Inter, sans-serif",
 
 			"& .MuiDataGrid-renderingZone": {

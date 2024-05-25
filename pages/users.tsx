@@ -24,8 +24,8 @@ const Users = () => {
         { field: "id", sort: "desc" }
     ]);
 
-    const { data: userData, isLoading } = useQuery<TSubscribersData>(['user', query.userId], () => getSubscriberById(String(query?.userId)))
-    const { data } = useQuery<TPredictionGroup>(['userPredictions', query.userId], () => getUserPredictions(String(query?.userId)))
+    const { data: userData, isLoading } = useQuery<TSubscribersData>(['user', query.userId], () => getSubscriberById(String(query?.userId)), { enabled: !!query.userId })
+    const { data } = useQuery<TPredictionGroup>(['userPredictions', query.userId], () => getUserPredictions(String(query?.userId)), { enabled: !!query.userId })
 
 
     const columns: GridColDef[] = [
@@ -41,7 +41,7 @@ const Users = () => {
                             params?.row?.predictions?.map((game: TPredictionSolo, i: number) => {
                                 return (
                                     <div key={i} className="">
-                                        <p className='text-xs font-semibold text-center'>{game.home} : {game.away}</p>
+                                        <p className='text-green-korrect font-semibold text-sm text-center'>{game.home} : {game.away}</p>
                                     </div>
                                 )
                             })
@@ -61,7 +61,7 @@ const Users = () => {
                 return (
                     <div className=" whitespace-nowrap h-full flex justify-center items-center">
                         <div
-                            className={`flex gap-1 justify-center items-center px-3 py-2 rounded-full text-xs text-left ${params.row.paymentStatus === "WIN" ? "bg-[#F0FFF7] text-[#0EA255] " : params.row.paymentStatus === "LOSE" ? "text-crimson bg-crimson-shade" : "bg-[#FFFAEB] text-[#F79009]"}`}
+                            className={`flex gap-1 justify-center items-center px-3 py-2 rounded-full text-xs font-medium text-left ${params.row.status === "WIN" ? "bg-[#F0FFF7] text-[#0EA255] " : params.row.status === "LOSE" ? "text-red bg-red bg-opacity-5" : "bg-[#FFFAEB] text-[#F79009]"}`}
                         >
                             <FiberManualRecordIcon sx={{ height: 12, width: 12 }} />
                             {params.formattedValue}
@@ -80,10 +80,11 @@ const Users = () => {
             flex: 1
         },
         {
-            field: "timeStamp",
+            field: "timestamp",
             headerName: "Time",
             type: "string",
             width: 180,
+            valueGetter: (params: any) => `${format(new Date(params), "hh:mm a")}`,
             flex: 1
         }
     ];
@@ -155,7 +156,7 @@ const Users = () => {
                     <h2 className='text-xl font-medium'>User Predictions</h2>
                     <div className="border border-[#55565A] border-opacity-15 rounded-md mt-5">
                         <div className="overflow-auto">
-                            <div>
+                            <div className='w-full min-w-[30rem]'>
                                 <DataGrid
                                     rows={data?.predictions ?? []}
                                     columns={columns}
