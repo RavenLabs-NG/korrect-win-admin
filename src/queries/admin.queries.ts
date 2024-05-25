@@ -117,7 +117,7 @@ type TPredict = {
 export const getPredictions = async (payload: TPredict) => {
 	const { data } = await queryClient()
 		.get(
-			`/v1/admin/games/${payload.setId}/predictions?subscriberId=${payload.subscriberId}&status=${payload.status ?? ''}&msisdn=${payload.msisdn ?? ''}`
+			`/v1/admin/games/${payload.setId}/predictions?subscriberId=${payload.subscriberId}&status=${payload.status}&msisdn=${payload.msisdn}`
 		)
 		.catch(e => nextError(e));
 	return data.data;
