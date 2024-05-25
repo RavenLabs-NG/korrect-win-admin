@@ -13,8 +13,8 @@ export const logInUser = async (payload: TLogin) => {
 };
 
 export const getLeagues = async () => {
-	const { data } = await altQueryClient()
-		.get("/admin/api/leagues")
+	const { data } = await queryClient()
+		.get("/v1/admin/leagues")
 		.catch(e => nextError(e));
 	return data;
 };
