@@ -64,36 +64,7 @@ const Game = () => {
     //     }
     // }, [data, isPreviousData, page, queryClient, payload, query.id])
 
-    const columns: GridColDef[] = [
-        // {
-        //     field: "id",
-        //     headerName: "#",
-        //     width: 70,
-        //     headerAlign: "center",
-        //     align: "center",
-        //     flex: 0.5,
-        //     sortComparator: (a, b) => parseInt(a) - parseInt(b)
-        // },
-        // {
-        //     field: "games",
-        //     headerName: "League",
-        //     width: 130,
-        //     flex: 1,
-        //     headerAlign: "center",
-        //     renderCell(params) {
-        //         return (
-        //             <div className='flex flex-col justify-center h-full gap-2'>
-        //                 {params.row.games.map((game: TGameSetSingle) => {
-        //                     return (
-        //                         <div key={game.id} className="">
-        //                             <p className='text-xs text-center'>{game.league.name}</p>
-        //                         </div>
-        //                     )
-        //                 })}
-        //             </div>
-        //         )
-        //     },
-        // },
+    const columns: GridColDef[] = [     
         {
             field: "id",
             headerName: "Predictions",
@@ -106,7 +77,7 @@ const Game = () => {
                             params?.row?.predictions.map((game: TPredictionSolo) => {
                                 return (
                                     <div key={game.id} className="">
-                                        <p className='text-xs text-center'>{game.home} : {game.away}</p>
+                                        <p className='text-green-korrect font-semibold text-sm text-center'>{game.home} : {game.away}</p>
                                     </div>
                                 )
                             })
@@ -126,7 +97,7 @@ const Game = () => {
             flex: 1
         },
         {
-            field: "timeStamp",
+            field: "timestamp",
             headerName: "Time",
             type: "string",
             width: 180,
@@ -134,8 +105,22 @@ const Game = () => {
             flex: 1
         },
         {
+            field: "status",
+            headerName: "Status",
+            type: "string",
+            width: 100,
+            renderCell(params) {
+                return (
+                    <div className='flex-center !justify-start h-full'>
+                        <p className={`text-xs font-medium text-center ${params.row.status === 'WON' ? 'text-green' : params.row.status === 'PENDING' ? 'text-goldenrod' : 'text-red'}`}>{params.row.status} </p>
+                    </div>
+                )
+            },
+            flex: 1
+        },
+        {
             field: "userId",
-            headerName: "Action",
+            headerName: "User",
             headerAlign: "center",
             renderCell(params) {
                 return (
@@ -143,13 +128,10 @@ const Game = () => {
                         <button title='View User' onClick={() => handleViewUser(params.row)} className={`bg-transparent border-0 text-green-korrect outline-none px-2 py-1`}>
                             <Person2OutlinedIcon />
                         </button>
-                        {/* <button onClick={() => handleClick(params.row)} className={`bg-transparent border-0 text-green outline-none px-2 py-1`}>
-                            <VisibilityIcon />
-                        </button> */}
                     </div>
                 );
             },
-            flex: 0.5
+            flex: 1
         },
     ];
 
@@ -157,38 +139,39 @@ const Game = () => {
         {
             field: "league",
             headerName: "League",
-            width: 150,
-            headerAlign: "center",
-            align: "center",
+            width: 130,
+            headerAlign: "left",
+            align: "left",
             renderCell(params) {
                 return (
-                    <div className='flex justify-start items-center h-full gap-2 pl-4'>
+                    <div className='flex justify-start items-center h-full gap-2'>
                         <img src={params.row.league.logo} alt="league" className='w-8 h-8 rounded-full' />
-                        <p>{params.row.league.name}</p>
+                        <p className='hidden lg:block'>{params.row.league.name}</p>
                     </div>
                 )
             },
+            // flex: 0.7
         },
-        {
-            field: "stadium",
-            headerName: "Stadium",
-            width: 150,
-            headerAlign: "center",
-            align: "center",
-        },
+        // {
+        //     field: "stadium",
+        //     headerName: "Stadium",
+        //     width: 150,
+        //     headerAlign: "center",
+        //     align: "center",
+        // },
         {
             field: "round",
             headerName: "Round",
-            width: 150,
-            headerAlign: "center",
-            align: "center",
+            width: 180,
+            headerAlign: "left",
+            align: "left",
         },
         {
             field: "home",
             headerName: "Home Team",
             width: 130,
             flex: 1,
-            headerAlign: "center",
+            headerAlign: "left",
             renderCell(params) {
                 return (
                     <div className='flex justify-start items-center h-full gap-4'>
@@ -201,7 +184,7 @@ const Game = () => {
         {
             field: "results",
             headerName: "Scores",
-            width: 130,
+            width: 80,
             flex: 1,
             headerAlign: "center",
             renderCell(params) {
@@ -217,7 +200,7 @@ const Game = () => {
             headerName: "Away Team",
             width: 70,
             flex: 1,
-            headerAlign: "center",
+            headerAlign: "left",
             renderCell(params) {
                 return (
                     <div className='flex justify-start items-center h-full gap-4'>
@@ -234,8 +217,8 @@ const Game = () => {
             width: 100,
             renderCell(params) {
                 return (
-                    <div className='flex-center h-full'>
-                        <p className={`text-xs text-center ${params.row.status === 'FT' ? 'text-green' : params.row.status === 'NS' ? 'text-goldenrod' : 'text-red'}`}>{params.row.statusText} </p>
+                    <div className='flex-center !justify-start h-full'>
+                        <p className={`text-xs text-left ${params.row.status === 'FT' ? 'text-green' : params.row.status === 'NS' ? 'text-goldenrod' : 'text-red'}`}>{params.row.statusText} </p>
                     </div>
                 )
             },
@@ -245,7 +228,8 @@ const Game = () => {
             field: "date",
             headerName: "Game Date",
             type: "string",
-            width: 180,
+            width: 130,
+            headerAlign: "left",
             valueGetter: (params: any) => `${format(new Date(params), "do MMM, yyy")}`,
             flex: 1
         },
@@ -253,7 +237,8 @@ const Game = () => {
             field: "time",
             headerName: "Time",
             type: "string",
-            width: 180,
+            width: 130,
+            headerAlign: "left",
             flex: 1
         },
     ];
@@ -285,7 +270,7 @@ const Game = () => {
                     </div>}
                     <div className="border border-[#55565A] border-opacity-15 rounded-md mt-5">
                         <div className="overflow-auto">
-                            <div>
+                            <div className='w-full min-w-[65rem]'>
                                 <DataGrid
                                     rows={gameData?.games ?? []}
                                     columns={gameColumns}
@@ -312,7 +297,7 @@ const Game = () => {
 
                     <div className="border border-[#55565A] border-opacity-15 rounded-md mt-5">
                         <div className="overflow-auto">
-                            <div>
+                            <div className='w-full min-w-[40rem]'>
                                 <DataGrid
                                     rows={data?.predictions ?? []}
                                     columns={columns}
