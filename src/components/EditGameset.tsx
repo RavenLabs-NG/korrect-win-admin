@@ -55,9 +55,9 @@ const EditGameset = ({ leagues, currentGame, setControl }: Props) => {
         if (leagues) {
             const formattedLeague = leagues.map((league: League) => {
                 return {
-                    label: league.name,
+                    label: `${league.name} (${league.country})`,
                     value: league.name,
-                    country: league.country,
+                    // country: league.country,
                     img: league.logo,
                     id: league.providerId
                 }

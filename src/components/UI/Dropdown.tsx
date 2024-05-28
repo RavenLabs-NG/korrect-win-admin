@@ -154,7 +154,7 @@ export default function DropDown({
                                                     />
                                                 </div>}
                                                 {e.label ? e.label : e.value}
-                                                <span className="ml-2">({e.country && e.country})</span>
+                                                {/* <span className="ml-2">({e.country && e.country})</span> */}
                                             </li>
                                         ))
                                         : "No results found"}
