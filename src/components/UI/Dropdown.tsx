@@ -16,6 +16,7 @@ export interface DropdownOption<T = string> {
     value: T;
     label?: JSX.Element | string;
     img?: string;
+    country?: string;
 }
 
 type Props = DetailedHTMLProps<
@@ -153,6 +154,7 @@ export default function DropDown({
                                                     />
                                                 </div>}
                                                 {e.label ? e.label : e.value}
+                                                <span className="ml-2">({e.country && e.country})</span>
                                             </li>
                                         ))
                                         : "No results found"}
