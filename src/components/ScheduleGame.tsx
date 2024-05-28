@@ -46,6 +46,7 @@ const ScheduleGame = ({ leagues, setControl }: Props) => {
                 return {
                     label: league.name,
                     value: league.name,
+                    country: league.country,
                     img: league.logo,
                     id: league.providerId
                 }

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useQuery, useQueryClient } from 'react-query';
 import { DataGrid, GridSortModel } from "@mui/x-data-grid";
@@ -259,7 +260,16 @@ const Games = ({ leagues }: Props) => {
     )
 }
 
-export const getStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ req: { cookies } }) => {
+
+    if (!cookies.korrecto) {
+        return {
+            redirect: {
+                destination: "/login",
+                permanent: false
+            }
+        };
+    }
 
     const data = await getLeagues();
 
