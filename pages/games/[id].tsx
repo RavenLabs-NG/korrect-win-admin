@@ -39,8 +39,9 @@ const Game = () => {
             setId: String(query.id),
             msisdn,
             subscriberId,
+            page
         }
-    }, [msisdn, query.id, subscriberId])
+    }, [msisdn, query.id, subscriberId, page])
 
     const { data, isLoading, isPreviousData, isFetching } = useQuery<TPredictionGroup>({
         queryKey: ['predictions', query.id, page + 1],
@@ -319,9 +320,12 @@ const Game = () => {
                         </div>
                     </div>
                 </section>
+                {isFetching && <section className="bg-white text-center py-2 px-6 rounded-xl mt-8">
+                    <Spinner color='green-korrect' size={1.9} />
+                </section>}
                 <section className="paginate bg-white py-5 px-6 rounded-xl mt-8 flex flex-col md:flex-row md:justify-between md:items-center gap-6">
                     <div>
-                        <p className='text-sm text-center'>{data?.currentPage} - {Number(data?.currentPage) * Number(data?.pageSize)} of {formatAmount(Number(data?.pages))} pages</p>
+                        <p className='text-sm text-center'>{((Number(data?.currentPage)) * Number(data?.pageSize)) - Number(data?.pageSize)} - {Number(data?.currentPage) * Number(data?.pageSize)} of {formatAmount(Number(data?.pages))} pages</p>
                     </div>
                     <div className='flex justify-center'>
                         <ReactPaginate
