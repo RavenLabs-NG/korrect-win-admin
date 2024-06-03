@@ -216,7 +216,7 @@ const Dashboard = () => {
                 </section>}
                 <section className="paginate bg-white py-5 px-6 rounded-xl mt-8 flex flex-col md:flex-row md:justify-between md:items-center gap-6">
                     <div>
-                        <p className='text-sm text-center'>{data?.currentPage} - {Number(data?.currentPage) * Number(data?.pageSize)} of {formatAmount(Number(data?.pages))} pages</p>
+                        <p className='text-sm text-center'>{((Number(data?.currentPage) * Number(data?.pageSize)) + 1) - Number(data?.pageSize)} - {Number(data?.currentPage) * Number(data?.pageSize)} of {formatAmount(Number(data?.pages))} pages</p>
                     </div>
                     <div className='flex justify-center'>
                         <ReactPaginate

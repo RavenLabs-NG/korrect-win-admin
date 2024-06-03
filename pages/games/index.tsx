@@ -72,14 +72,14 @@ const Games = ({ leagues }: Props) => {
             headerName: "League",
             width: 130,
             flex: 1,
-            headerAlign: "center",
+            headerAlign: "left",
             renderCell(params) {
                 return (
                     <div className='flex flex-col justify-center h-full gap-2'>
                         {params.row.games.map((game: TGameSetSingle) => {
                             return (
                                 <div key={game.id} className="">
-                                    <p className='text-xs text-center'>{game.league.name}</p>
+                                    <p className='text-xs text-left'>{game.league.name}</p>
                                 </div>
                             )
                         })}
@@ -91,7 +91,7 @@ const Games = ({ leagues }: Props) => {
             field: "id",
             headerName: "Scheduled Games",
             width: 180,
-            headerAlign: "center",
+            headerAlign: "left",
             renderCell(params) {
                 return (
                     <div className="flex flex-col justify-center h-full gap-2">
@@ -99,7 +99,7 @@ const Games = ({ leagues }: Props) => {
                             params.row.games.map((game: TGameSetSingle) => {
                                 return (
                                     <div key={game.id} className="">
-                                        <p className='text-xs text-center'>{game.home.name} <span className='text-green-korrect font-semibold'>{game.home.score}:{game.away.score}</span> {game.away.name}</p>
+                                        <p className='text-xs text-left'>{game.home.name} <span className='text-green-korrect font-semibold'>{game.home.score}:{game.away.score}</span> {game.away.name}</p>
                                     </div>
                                 )
                             })
@@ -155,7 +155,7 @@ const Games = ({ leagues }: Props) => {
             headerAlign: "center",
             renderCell(params) {
                 return (
-                    <div className="flex justify-center items-center gap-2 h-full w-full">
+                    <div className="flex justify-center items-center gap-2 h-full w-full pr-6">
                         <button onClick={() => handleEditClick(params.row)} className={`bg-transparent border-0 text-blue outline-none px-2 py-1`}>
                             <EditOutlinedIcon />
                         </button>
@@ -191,7 +191,7 @@ const Games = ({ leagues }: Props) => {
 
                     <div className="border border-[#55565A] border-opacity-15 rounded-md mt-5">
                         <div className="overflow-auto">
-                            <div>
+                            <div className='w-full min-w-[65rem]'>
                                 <DataGrid
                                     rows={data?.gameSets ?? []}
                                     columns={columns}

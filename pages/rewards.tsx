@@ -92,7 +92,7 @@ const Rewards = () => {
         {
             field: "gameSetId",
             headerName: "Email",
-            width: 180,
+            width: 140,
             headerAlign: "center",
             renderCell(params) {
                 return (
@@ -108,8 +108,16 @@ const Rewards = () => {
             field: "reward",
             headerName: "Amount",
             type: "string",
-            width: 180,
+            width: 140,
             // valueGetter: (params: any) => `${format(new Date(params), "hh:mm a")}`,
+            flex: 1
+        },
+        {
+            field: "predictionTimestamp",
+            headerName: "Prediction date",
+            type: "string",
+            width: 180,
+            valueGetter: (params: any) => `${format(new Date(params), "do MMM, yyy hh:mm a")}`,
             flex: 1
         },
         {
@@ -200,7 +208,7 @@ const Rewards = () => {
                     
                     <div className="border border-[#55565A] border-opacity-15 rounded-md mt-5">
                         <div className="overflow-auto">
-                            <div>
+                            <div className='w-full min-w-[60rem]'>
                                 <DataGrid
                                     rows={data?.winners ?? []}
                                     columns={columns}

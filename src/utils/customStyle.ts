@@ -5,6 +5,7 @@ const useStyles = makeStyles(theme =>
 		root: {
 			border: "none",
 			minWidth: "45rem",
+			overflow: "scroll",
 			fontFamily: "Inter, sans-serif",
 
 			"& .MuiDataGrid-renderingZone": {
@@ -36,7 +37,7 @@ const useStyles = makeStyles(theme =>
 					// border: ".5px solid rgb(30, 41, 59,  .1)"
 					fontSize: "13px",
 					color: "#767171",
-					fontWeight: 300,
+					fontWeight: 300
 				}
 			},
 			"& .Mui-selected": {
